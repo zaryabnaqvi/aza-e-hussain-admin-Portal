@@ -11,7 +11,7 @@ export default function Videos() {
         e.preventDefault();
         AddVideos(Video.videotitle,Video.videolink,Video.videotype,Video.videodesc);
         setVideos({videotitle:"",videolink:"",videotype:"",videodesc:""});
-        window.location.reload();
+        // window.location.reload();
     }
     
     const [Video,setVideos]=useState({videotitle:"",videolink:"",videotype:"",videodesc:""})
@@ -26,7 +26,7 @@ export default function Videos() {
 
   return (
     <>
-    <div className='container'>
+    <div className='container'>  
 
     <div className="container py-5 w">
     
@@ -34,7 +34,7 @@ export default function Videos() {
     <form className="p-md-5 border rounded-3 bg-body-tertiary">
 
       <h1>Add new Video</h1>
-      <p>Enter every data very corrrectly</p>
+      <p>Enter every data very correctly</p>
 
       <div className="form-floating mb-3">
         <input type="text" id="form4Example1" className="form-control" name='videotitle' onChange={onChange} />
@@ -57,8 +57,8 @@ export default function Videos() {
       <select className="form-select mb-3" aria-label="Default select example" name='videotype' onChange={onChange}>
         <option defaultValue="majlis"> Select -- Video type</option>
         <option value="Majlis">Majlis</option>
-        <option value="Manqabat">Manqabat</option>
         <option value="Jashan">Jashan</option>
+        <option value="Accouncement">Accouncement</option>
       </select>
 
       <div className="form-floating mb-3">

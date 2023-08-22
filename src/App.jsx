@@ -13,6 +13,7 @@ import Gallery from './Components/Gallery'
 import Login from './Components/Login'
 import NavBar from './Components/NavBar'
 import Join from './Components/Join';
+import Dashboard from './Components/Dashboard';
 
 
 
@@ -27,7 +28,9 @@ function App() {
             <NavBar />
 
             <Routes>
-              <Route exact path='/' element={<Videos />} />
+            <Route exact path='/' element={<Dashboard/>} />
+
+                  
               <Route exact path='/videos' element={<Videos />} />
               <Route exact path='/gallery' element={<Gallery />} />
               <Route exact path='/feedbacks' element={<Feedbacks />} />

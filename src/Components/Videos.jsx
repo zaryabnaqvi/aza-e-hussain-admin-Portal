@@ -1,49 +1,68 @@
-import React, { useContext, useEffect, useRef,useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import VideosContext from '../Context/VideosContext';
 import AddVideos from './AddVideos';
 
 import VideosItem from './VideoItem';
 
 export default function Videos() {
-
+    const auth = localStorage.getItem('auth-token')
     const Context = useContext(VideosContext);
-    const [Video,setVideos]=useState({id:"",videotitle:"",videolink:"",videotype:"",videodesc:""})
-    useEffect(()=>{
+    const [Video, setVideos] = useState({ id: "", videotitle: "", videolink: "", videotype: "", videodesc: "" })
+    useEffect(() => {
 
         Context.getVideos();
         // eslint-disable-next-line 
-        
-},[Video])
 
-    const ref=useRef(null)
-    const refClose =useRef(null)
+    }, [Video])
 
-    
+    const ref = useRef(null)
+    const refClose = useRef(null)
 
 
 
-    const UpdateVideos=(currentVideos)=>{
-        setVideos({id:currentVideos._id,videotitle:currentVideos.title,videolink:currentVideos.Url,videotype:currentVideos.choice,videodesc:currentVideos.desc})
+
+
+    const UpdateVideos = (currentVideos) => {
+        setVideos({ id: currentVideos._id, videotitle: currentVideos.title, videolink: currentVideos.Url, videotype: currentVideos.choice, videodesc: currentVideos.desc })
         console.log(currentVideos)
         ref.current.click();
     }
 
-    
-    const EditVideos=(e)=>{
-        Context.UpdateVideos(Video.id,Video.videotitle,Video.videolink,Video.videotype,Video.videodesc);
+
+    const EditVideos = (e) => {
+        Context.UpdateVideos(Video.id, Video.videotitle, Video.videolink, Video.videotype, Video.videodesc);
         window.location.reload();
         refClose.current.click();
-  
-        
+
+
     }
-    const onChange =(e)=>{
-        setVideos({...Video,[e.target.name]:e.target.value})
+    const onChange = (e) => {
+        setVideos({ ...Video, [e.target.name]: e.target.value })
     }
 
     return (
         <>
 
-<button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        {auth && auth !== '64db59e325c7945c4ee3d2ff' && (
+            <h1 className='text center mt-5 pt-5'>
+           <i class="fa-solid fa-lock fa-beat me-3"></i> NO ACCESS KINDLY LOGIN TO MANAGE PAGES
+            </h1> 
+        )
+            
+        }
+
+        {!auth && (
+            <h1 className='text center mt-5 pt-5'>
+           <i class="fa-solid fa-lock fa-beat me-3"></i> NO ACCESS KINDLY LOGIN TO MANAGE PAGES
+            </h1>
+        )
+            
+        }
+
+
+            {auth && auth === '64db59e325c7945c4ee3d2ff' && (<>
+
+                <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button>
 
@@ -103,6 +122,7 @@ export default function Videos() {
 
                 </div>
             </div>
+            </>)}
         </>
     )
 }

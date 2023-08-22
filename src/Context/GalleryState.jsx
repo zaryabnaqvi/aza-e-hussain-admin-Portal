@@ -8,7 +8,7 @@ import GalleryContext from './GalleryContext'
 
 
   const getGallery=async()=>{
-    const data = await fetch("http://localhost:8000/api/gallery/getgallery",{
+    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/gallery/getgallery",{
       method:"GET",
     
     })
@@ -18,27 +18,40 @@ import GalleryContext from './GalleryContext'
   }
 
   const AddGallery=async(title,Url,choice,desc)=>{
-    const data = await fetch("http://localhost:8000/api/gallery/creategallery",{
+    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/gallery/creategallery",{
       method:"POST",
       headers:{
         "Content-type":"application/json"
       },
       body:JSON.stringify({title,Url,choice,desc})}
     )
+    if(data.status==200){
     const json=await data.json();
-    let state=Gallery;
+    console.log(json)
+    let state=Gallery; 
     setGallery(state.concat(json))
+    window.location.reload();
+    
+    }else{
+     alert( "failed to get data")
+    }
 
   }
 
   const UpdateGallery=async(id,title,Url,choice,desc)=>{
-    const data = await fetch(`http://localhost:8000/api/gallery/updategallery/${id}`,{
+    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/gallery/updategallery/${id}`,{
       method:"PUT",
       headers:{
         "Content-type":"application/json",
       },
       body:JSON.stringify({title,Url,choice,desc})}
     )
+    if(data.status==200){
+      const json = await data.json()
+      console.log(json)
+      alert("updated successfully")
+      window.location.reload();
+    }
     let EditNotes=Gallery;
     console.log(EditNotes)
     for (let index = 0; index < EditNotes.length; index++) {
@@ -61,7 +74,7 @@ import GalleryContext from './GalleryContext'
   }
   const deleteGallery=async(id)=>{
     console.log(id)
-    const data = await fetch(`http://localhost:8000/api/gallery/deletegallery/${id}`,{
+    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/gallery/deletegallery/${id}`,{
       method:"DELETE",
      
     })

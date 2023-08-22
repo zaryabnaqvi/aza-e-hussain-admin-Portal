@@ -4,7 +4,21 @@ import AddGallery from './AddGallery';
 
 import GalleryItem from './GalleryItem';
 
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { storage } from "../firebase.js";
+
+
+
 export default function Gallery() {
+
+  const auth = localStorage.getItem('auth-token')
 
     const Context = useContext(GalleryContext);
     
@@ -16,29 +30,31 @@ export default function Gallery() {
         
 },[Gallery])
 
-    const ref=useRef(null)
-    const refClose =useRef(null)
+    const Ref=useRef(null)
+    const RefClose =useRef(null)
 
 
-    const Base64Converter = async(file)=>{
-        return new Promise((resolve,reject)=>{
-            const readfile = new FileReader();
-            readfile.readAsDataURL(file)
-            readfile.onload=()=>{
-                resolve(readfile.result)
-            }
-        })
-    }
-
-    const handleImageUpload = async(event) => {
-    const file = event.target.files[0];  
-
-    if (file) {
-      const imageBase64 =await Base64Converter(file);
-        setGallery({...Gallery,Gallerylink:imageBase64});
-        console.log(imageBase64)
-    }
-  }; 
+    const handleImageUpload =(event) => {
+      const file = event.target.files[0];  
+  
+      if (file) {
+  
+        const imageRefer = ref(storage, `images/${file.name}`);
+      uploadBytes(imageRefer, file).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          setGallery({...Gallery,Gallerylink:url});
+        });
+      });
+  
+        // const imageBase64 =await Base64Converter(file);
+  
+  
+  
+  
+        //   setGallery({...Gallery,Gallerylink:imageBase64});
+        //   console.log(imageBase64)
+      }
+    }; 
 
 
 
@@ -47,7 +63,7 @@ export default function Gallery() {
     const UpdateGallery=(currentGallery)=>{
         setGallery({id:currentGallery._id,Gallerytitle:currentGallery.title,Gallerylink:currentGallery.Url,Gallerytype:currentGallery.choice,Gallerydesc:currentGallery.desc})
         console.log(currentGallery)
-        ref.current.click();
+        Ref.current.click();
         
 
     }
@@ -55,8 +71,8 @@ export default function Gallery() {
     
     const EditGallery=(e)=>{
         Context.UpdateGallery(Gallery.id,Gallery.Gallerytitle,Gallery.Gallerylink,Gallery.Gallerytype,Gallery.Gallerydesc);
-        window.location.reload();
-        refClose.current.click();
+        // window.location.reload();
+        RefClose.current.click();
         
   
         
@@ -68,7 +84,28 @@ export default function Gallery() {
     return (
         <>
 
-<button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+{auth && auth !== '64db59e325c7945c4ee3d2ff' && (
+            <h1 className='text center mt-5 pt-5'>
+           <i class="fa-solid fa-lock fa-beat me-3"></i> NO ACCESS KINDLY LOGIN TO MANAGE PAGES
+            </h1>
+        )
+            
+        }
+
+        {!auth && (
+            <h1 className='text center mt-5 pt-5'>
+           <i class="fa-solid fa-lock fa-beat me-3"></i> NO ACCESS KINDLY LOGIN TO MANAGE PAGES
+            </h1>
+        )
+            
+        }
+
+
+            {auth && auth === '64db59e325c7945c4ee3d2ff' && (<>
+
+
+<button type="button" ref={Ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button>
 
@@ -138,7 +175,7 @@ export default function Gallery() {
                         )
                     })}
 
-                </div>
+                </div></>)}
     
         </>
     )

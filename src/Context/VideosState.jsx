@@ -6,9 +6,9 @@ import VideosContext from './VideosContext'
     const [Videos,setVideos]=useState([]);
 
 
-
+ 
   const getVideos=async()=>{
-    const data = await fetch("http://localhost:8000/api/videos/getvideos",{
+    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/videos/getvideos",{
       method:"GET",
     
     })
@@ -18,21 +18,23 @@ import VideosContext from './VideosContext'
   }
 
   const AddVideos=async(title,Url,choice,desc)=>{
-    const data = await fetch("http://localhost:8000/api/videos/createvideos",{
+    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/videos/createvideos",{
       method:"POST",
       headers:{
-        "Content-type":"application/json"
+        "Content-type":"application/json" 
       },
       body:JSON.stringify({title,Url,choice,desc})}
     )
     const json=await data.json();
+    console.log(json)
     let state=Videos;
     setVideos(state.concat(json))
+    window.location.reload();
 
   }
 
   const UpdateVideos=async(id,title,Url,choice,desc)=>{
-    const data = await fetch(`http://localhost:8000/api/videos/updatevideos/${id}`,{
+    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/videos/updatevideos/${id}`,{
       method:"PUT",
       headers:{
         "Content-type":"application/json",
@@ -47,9 +49,6 @@ import VideosContext from './VideosContext'
         EditNotes[index].Url=Url;
         EditNotes[index].choice=choice;
         EditNotes[index].desc=desc;
-
-        
-
         break;
       }
     }
@@ -61,7 +60,7 @@ import VideosContext from './VideosContext'
   }
   const deleteVideos=async(id)=>{
     console.log(id)
-    const data = await fetch(`http://localhost:8000/api/videos/deletevideos/${id}`,{
+    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/videos/deletevideos/${id}`,{
       method:"DELETE",
      
     })

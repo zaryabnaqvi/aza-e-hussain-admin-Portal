@@ -3,12 +3,28 @@ import GalleryContext from '../Context/GalleryContext'
 
 
 export default function GalleryItem(props) {
+	
+		
+	
+
     const Context = useContext(GalleryContext)
     const { deleteGallery } = Context
     const { Gallery, UpdateGallery } = props;
+	const dateString = Gallery.createdAt
+		const options = {
+			weekday: 'short',  // Short weekday name (e.g., "Mon")
+			month: 'short',    // Short month name (e.g., "May")
+			day: 'numeric',    // Day of the month (e.g., "25")
+			year: 'numeric',   // Year (e.g., "2020")
+			daySuffix: '2-digit' // Day of the month with suffix (e.g., "25th")
+		};
+	
+		const date = new Date(dateString);
+		const formattedDate = date.toLocaleDateString('en-US', options);
+	
     return (
         <>
-
+ 
     
 <article className="postcard dark red">
 			<a className="postcard__img_link" href="#">
@@ -18,7 +34,7 @@ export default function GalleryItem(props) {
 				<h1 className="postcard__title red"><a href="#">{props.title}</a></h1>
 				<div className="postcard__subtitle small">
 					<time dateTime="2020-05-25 12:00:00">
-						<i className="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+						<i className="fas fa-calendar-alt mr-2"></i>{formattedDate}
 					</time>
 				</div>
 				<div className="postcard__bar"></div>

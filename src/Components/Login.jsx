@@ -1,11 +1,55 @@
-import React from 'react';
+import React,{useState} from 'react';
+import { redirect } from "react-router-dom";
 import  Image  from '../../src/assets/logo.png';
 
+
 const Login = () => {
+
+    const[isloading,Setisloading] = useState(false)
+    const [user,setUser] = useState({username:"" , password:""})
+
+
+    const onChange = (e)=>{
+        setUser({...user,[e.target.name]:e.target.value})
+    }
+    const handleLogin =async()=>{
+        Login(user.username,user.password);
+    }
+
+    const Login = async (username,password)=>{
+        Setisloading(true)
+        const req = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/auth/signin",{
+            method:"POST",
+         headers:{
+            "Content-type":"application/json"
+      },
+        body:JSON.stringify({username,password})
+        })
+        if(req.status==200){
+            const json = await req.json() 
+            Setisloading(false) 
+            localStorage.setItem("auth-token",json._id) 
+            
+            setUser({...user,username:"" })
+            setUser({...user,password:"" })
+
+            window.location.replace('/')
+            
+            
+        }
+        else{ 
+            alert("Login Failed")
+            const json =await req.json()
+            console.log(json)
+            Setisloading(false)
+        }
+        
+    }
+
     return (
-        <section className="mb-5" style={{ backgroundColor: '' }}>
+        <section className="mb-5">
             <div className="container py-5 h-100">
-                <div className="row d-flex justify-content-center align-items-center h-100">
+                <div className="row d-flex justify-content-center align-items-center">
                     <div className="col col-xl-10">
                         <div className="card" style={{ borderRadius: '1rem' }}>
                             <div className="row g-0">
@@ -17,12 +61,11 @@ const Login = () => {
                                         style={{ borderRadius: '1rem 0 0 1rem',marginTop:'5rem' }}
                                     />
                                 </div>
-                                <div className="col-md-6 col-lg-7 d-flex align-items-center">
-                                    <div className="card-body p-4 p-lg-5 text-black">
+                                <div className="col-md-6 col-lg-7 text-center d-flex align-items-center">
+                                    <div className="card-body p-2 p-lg-5 text-black">
                                         <form>
-                                            <div className="d-flex align-items-center mb-3 pb-1">
-                                                <i className="fas fa-cubes fa-2x me-3" style={{ color: 'red' }}></i>
-                                                <span className="h1 fw-bold mb-0">AZA-E-HUSSAIN</span>
+                                            <div className="d-flex text center align-items-center mb-3 pb-1">
+                                                <span className="h1 fw-bold text-center mb-0">AZA-E-HUSSAIN</span>
                                             </div>
 
                                             <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: '1px' }}>
@@ -33,7 +76,10 @@ const Login = () => {
                                                 <input
                                                     type="email"
                                                     id="form2Example17"
+                                                    name='username'
                                                     className="form-control form-control-lg"
+                                                    onChange={onChange}
+                                                    value={user.username}
                                                 />
                                                 <label className="form-label" htmlFor="form2Example17">
                                                     Email address
@@ -43,8 +89,11 @@ const Login = () => {
                                             <div className="form-outline mb-4">
                                                 <input
                                                     type="password"
+                                                    name='password'
                                                     id="form2Example27"
+                                                    onChange={onChange}
                                                     className="form-control form-control-lg"
+                                                    value={user.password}
                                                 />
                                                 <label className="form-label" htmlFor="form2Example27">
                                                     Password
@@ -52,16 +101,14 @@ const Login = () => {
                                             </div>
 
                                             <div className="pt-1 mb-4">
-                                                <button className="btn btn-dark btn-lg btn-block" type="button">
-                                                    Login
+                                                <button className="btn btn-dark btn-lg btn-block" onClick={handleLogin} type="button">
+                                                    {!isloading && (<>Login</>)}  {isloading && (<><i class="fa-solid fa-circle-notch fa-spin" style={{color: "#ff000d"}}></i></>)}
                                                 </button>
                                             </div>
 
-                                            <a className="small text-muted" href="#!">
-                                                Forgot password?
-                                            </a>
+                                        
                                             <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>
-                                                Don't have an account? <a style={{ color: '#393f81' }}>Sorry but this portal is only for authorized user not outsider allowed</a>
+                                                Don't have an account? <a style={{ color: '#393f81' }}>Sorry but this portal is only for authorized user no outsider allowed</a>
                                             </p>
                                             <a href="#!" className="small text-muted">
                                                 Terms of use.
