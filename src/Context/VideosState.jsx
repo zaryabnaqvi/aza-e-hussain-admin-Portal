@@ -8,7 +8,7 @@ import VideosContext from './VideosContext'
 
  
   const getVideos=async()=>{
-    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/videos/getvideos",{
+    const data = await fetch("https://aza-e-hussain-backend-server.vercel.app/videos/getvideos",{
       method:"GET",
     
     })
@@ -18,7 +18,7 @@ import VideosContext from './VideosContext'
   }
 
   const AddVideos=async(title,Url,choice,desc)=>{
-    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/videos/createvideos",{
+    const data = await fetch("https://aza-e-hussain-backend-server.vercel.app/api/videos/createvideos",{
       method:"POST",
       headers:{
         "Content-type":"application/json" 
@@ -34,7 +34,7 @@ import VideosContext from './VideosContext'
   }
 
   const UpdateVideos=async(id,title,Url,choice,desc)=>{
-    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/videos/updatevideos/${id}`,{
+    const data = await fetch(`https://aza-e-hussain-backend-server.vercel.app/api/videos/updatevideos/${id}`,{
       method:"PUT",
       headers:{
         "Content-type":"application/json",
@@ -60,7 +60,7 @@ import VideosContext from './VideosContext'
   }
   const deleteVideos=async(id)=>{
     console.log(id)
-    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/videos/deletevideos/${id}`,{
+    const data = await fetch(`https://aza-e-hussain-backend-server.vercel.app/api/videos/deletevideos/${id}`,{
       method:"DELETE",
      
     })
