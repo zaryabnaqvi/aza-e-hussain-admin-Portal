@@ -8,7 +8,7 @@ import GalleryContext from './GalleryContext'
 
 
   const getGallery=async()=>{
-    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/gallery/getgallery",{
+    const data = await fetch("https://aza-e-hussain-backend-server.vercel.app/api/gallery/getgallery",{
       method:"GET",
     
     })
@@ -18,7 +18,7 @@ import GalleryContext from './GalleryContext'
   }
 
   const AddGallery=async(title,Url,choice,desc)=>{
-    const data = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/gallery/creategallery",{
+    const data = await fetch("https://aza-e-hussain-backend-server.vercel.app/api/gallery/creategallery",{
       method:"POST",
       headers:{
         "Content-type":"application/json"
@@ -39,7 +39,7 @@ import GalleryContext from './GalleryContext'
   }
 
   const UpdateGallery=async(id,title,Url,choice,desc)=>{
-    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/gallery/updategallery/${id}`,{
+    const data = await fetch(`https://aza-e-hussain-backend-server.vercel.app/api/gallery/updategallery/${id}`,{
       method:"PUT",
       headers:{
         "Content-type":"application/json",
@@ -74,7 +74,7 @@ import GalleryContext from './GalleryContext'
   }
   const deleteGallery=async(id)=>{
     console.log(id)
-    const data = await fetch(`https://gold-adventurous-perch.cyclic.cloud/api/gallery/deletegallery/${id}`,{
+    const data = await fetch(`https://aza-e-hussain-backend-server.vercel.app/gallery/deletegallery/${id}`,{
       method:"DELETE",
      
     })
