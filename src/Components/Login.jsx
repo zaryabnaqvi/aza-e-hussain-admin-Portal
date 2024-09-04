@@ -18,7 +18,7 @@ const Login = () => {
 
     const Login = async (username,password)=>{
         Setisloading(true)
-        const req = await fetch("https://gold-adventurous-perch.cyclic.cloud/api/auth/signin",{
+        const req = await fetch("https://aza-e-hussain-backend-server.vercel.app/api/auth/signin",{
             method:"POST",
          headers:{
             "Content-type":"application/json"
